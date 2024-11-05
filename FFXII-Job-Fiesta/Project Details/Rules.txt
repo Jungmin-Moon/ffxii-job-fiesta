@@ -1,0 +1,17 @@
+Zodiac Age features 6 total characters
+
+1. Each character must have a job
+2. Second job can be null because main game can be beaten with only single jobs on each
+3. Each run will have a start date but end date can be null since they have to hit run complete 
+4. Options to allow for dupe jobs on main job since 6 dupe jobs beating the main game is possible
+5. option to allow for dupes on secondary jobs for same reason as above
+6. Options for dupes will be for 2 to 6 characters
+
+
+
+Need user account system
+Need a table of runs that tracks by username
+User table needs account id, username, password
+Runs table needs username, start date, end date, a column for each character main and secondary job, columns for beating main game, yiazmat and omega mark xii
+
+
