@@ -45,7 +45,7 @@ public class WebSecurityConfig implements WebMvcConfigurer{
 	SecurityFilterChain config(HttpSecurity http) throws Exception {
 		http.authenticationProvider(authenticationProvider());
 		
-		http.authorizeHttpRequests(a -> a.requestMatchers("/", "/home", "/login", "/register").permitAll());
+		http.authorizeHttpRequests(a -> a.requestMatchers("/", "/home", "/login", "/register", "/current-runs").permitAll());
 		
 		http.formLogin(l -> l.loginPage("/login"));
 		http.logout((logout) -> logout.logoutSuccessUrl("/home")
