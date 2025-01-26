@@ -1,0 +1,6 @@
+package com.zodiacfiesta.entities;
+
+public enum Jobs {
+	UHLAN, SHIKARI, MONK, KNIGHT, BUSHI, WHITE_MAGE, FOEBREAKER, TIME_BATTLEMAGE, MACHINIST,
+	RED_BATTLEMAGE, ARCHER, BLACK_MAGE
+}
