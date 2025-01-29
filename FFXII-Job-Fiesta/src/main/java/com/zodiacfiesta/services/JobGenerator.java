@@ -62,9 +62,19 @@ public class JobGenerator {
 	
 	//for every character having a different job1 and job2
 	public ArrayList<ArrayList<Jobs>> differentBothJobs() {
-		ArrayList<ArrayList<Jobs>> twelveFilled = new ArrayList<ArrayList<Jobs>>();
+		ArrayList<ArrayList<Jobs>> twelveFilled = new ArrayList<>(2);
 		
+		twelveFilled.add(new ArrayList<Jobs>(6));
+		twelveFilled.add(new ArrayList<Jobs>(6));
 		
+		for (int i = 0; i < twelveFilled.size(); i++) {
+			
+			for (int j = 0; j < twelveFilled.get(i).size(); j++) {
+				//Jobs temp = jobs[new Random().nextInt(jobs.length)];
+				
+				addJobToList(twelveFilled);
+			}
+		}
 		
 		
 		return twelveFilled;
@@ -81,7 +91,7 @@ public class JobGenerator {
 	}
 	
 	//helper method to check if a job was already selected
-	private boolean checkIfAlreadySelected(Jobs checkJob, List<List<Jobs>> list) {
+	private boolean checkIfAlreadySelected(Jobs checkJob, ArrayList<ArrayList<Jobs>> list) {
 		boolean isAlreadyAdded = false;
 		
 		//should be ok since the max in the list can be 12 
@@ -91,4 +101,53 @@ public class JobGenerator {
 		
 		return isAlreadyAdded;
 	}
+	
+	private void addJobToList(ArrayList<ArrayList<Jobs>> aJobs) {
+		Jobs temp = jobs[new Random().nextInt(jobs.length)];
+		
+		while(checkIfAlreadySelected(temp, aJobs) == false) {
+			
+		}
+	}
+	
+	
+	/* code to remind myself how to properly do what i need
+	 * for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 3; j++) {
+                nums.get(i).add(j);
+            }
+        }
+        
+        System.out.println("Values in 2D List before Mod");
+        for (ArrayList<Integer> row : nums) {
+            for (Integer i : row) {
+                System.out.print(i + " ");
+            }
+            System.out.println();
+        }
+        
+        modList(nums);
+        
+        System.out.println("Values in 2D List after");
+        for (ArrayList<Integer> row : nums) {
+            for (Integer i : row) {
+                System.out.print(i + " ");
+            }
+            System.out.println();
+        }
+    }
+    
+    
+    public static void modList(ArrayList<ArrayList<Integer>> n) {
+        for (int i = 0; i < n.size(); i++) {
+            for (int j = 0; j < n.get(i).size(); j++) {
+                int temp = n.get(i).get(j);
+                n.get(i).set(j, temp * 2);
+            }
+        }
+    }
+	 * 
+	 * 
+	 * 
+	 */
 }
