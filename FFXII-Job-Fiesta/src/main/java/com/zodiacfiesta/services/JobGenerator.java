@@ -57,22 +57,38 @@ public class JobGenerator {
 			}
 		}
 		
-		
 		return bothJobs;
 	}
 	
 	//for every character having a different job1 and job2
-	public List<List<Jobs>> differentBothJobs() {
+	public ArrayList<ArrayList<Jobs>> differentBothJobs() {
+		ArrayList<ArrayList<Jobs>> twelveFilled = new ArrayList<ArrayList<Jobs>>();
 		
+		
+		
+		
+		return twelveFilled;
 	}
 	
 	//every character has different job1s but same Job2
-	public List<List<Jobs>> differentJobTwo() {
+	public ArrayList<ArrayList<Jobs>> differentJobTwo() {
 		
 	}
 	
 	//every character different job2s but same Job1
-	public List<List<Jobs>> differentJobOne() {
+	public ArrayList<ArrayList<Jobs>> differentJobOne() {
 		
+	}
+	
+	//helper method to check if a job was already selected
+	private boolean checkIfAlreadySelected(Jobs checkJob, List<List<Jobs>> list) {
+		boolean isAlreadyAdded = false;
+		
+		//should be ok since the max in the list can be 12 
+		if (list.contains(checkJob)) {
+			isAlreadyAdded = true;
+		}
+		
+		return isAlreadyAdded;
 	}
 }
