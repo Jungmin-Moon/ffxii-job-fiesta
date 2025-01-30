@@ -62,21 +62,18 @@ public class JobGenerator {
 	
 	//for every character having a different job1 and job2
 	public ArrayList<ArrayList<Jobs>> differentBothJobs() {
-		ArrayList<ArrayList<Jobs>> twelveFilled = new ArrayList<>(2);
+		ArrayList<ArrayList<Jobs>> twelveFilled = new ArrayList<>();
 		
-		twelveFilled.add(new ArrayList<Jobs>(6));
-		twelveFilled.add(new ArrayList<Jobs>(6));
+		twelveFilled.add(new ArrayList<Jobs>());
+		twelveFilled.add(new ArrayList<Jobs>());
 		
 		for (int i = 0; i < twelveFilled.size(); i++) {
 			
-			for (int j = 0; j < twelveFilled.get(i).size(); j++) {
+			for (int j = 0; j < 6; j++) {
 				//Jobs temp = jobs[new Random().nextInt(jobs.length)];
-				
-				addJobToList(twelveFilled);
+				addJobToList(twelveFilled, i);
 			}
 		}
-		
-		
 		return twelveFilled;
 	}
 	
@@ -102,12 +99,19 @@ public class JobGenerator {
 		return isAlreadyAdded;
 	}
 	
-	private void addJobToList(ArrayList<ArrayList<Jobs>> aJobs) {
-		Jobs temp = jobs[new Random().nextInt(jobs.length)];
+	//adds jobs to the List
+	private void addJobToList(ArrayList<ArrayList<Jobs>> aJobs, int index) {
 		
-		while(checkIfAlreadySelected(temp, aJobs) == false) {
-			
+		//randomly chooses a job in the ENUM
+		Jobs potentialJob = jobs[new Random().nextInt(jobs.length)];
+		
+		//if the job isn't in the list then keep randomly choosing a job until it is a job not in the list already
+		while (checkIfAlreadySelected(potentialJob, aJobs) == true) {
+			potentialJob = jobs[new Random().nextInt(jobs.length)];
 		}
+		
+		//add the job to the list 
+		aJobs.get(index).add(potentialJob);
 	}
 	
 	
