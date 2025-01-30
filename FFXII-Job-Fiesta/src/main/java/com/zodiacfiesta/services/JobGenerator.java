@@ -19,19 +19,13 @@ public class JobGenerator {
 	
 	//order for jobs should be Vaan, Fran/Balthier, Basch, Ashe, Penelo
 	
+	//methods for generating
+	
 	//for every character to have a different job1
 	public List<Jobs> singleDifferentJobs() {
 		ArrayList<Jobs> selected = new ArrayList<>();
 		
-		for (int i = 0; i < 6; i++) {
-			Jobs temp = jobs[new Random().nextInt(jobs.length)];
-			
-			if (selected.contains(temp)) {
-				continue;
-			} else {
-				selected.add(temp);
-			}
-		}
+		
 			
 		return selected;
 	}
@@ -47,14 +41,8 @@ public class JobGenerator {
 	public List<Jobs> oneJobEveryoneBoth() {
 		ArrayList<Jobs> bothJobs = new ArrayList<>();
 		
-		for (int i = 0; i < 2; i++) {
-			Jobs temp = jobs[new Random().nextInt(jobs.length)];
-			
-			if (bothJobs.contains(temp)) {
-				continue;
-			} else {
-				bothJobs.add(temp);
-			}
+		while(bothJobs.size() < 2) {
+			twoJobsWholeParty(bothJobs);
 		}
 		
 		return bothJobs;
@@ -84,6 +72,16 @@ public class JobGenerator {
 	
 	//every character different job2s but same Job1
 	public ArrayList<ArrayList<Jobs>> differentJobOne() {
+		
+	}
+	
+	
+	
+	
+	//helper methods
+	
+	//helper method for adding just 2 jobs
+	private void twoJobsWholeParty(ArrayList<Jobs> jobsList) {
 		
 	}
 	
