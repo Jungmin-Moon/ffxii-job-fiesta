@@ -33,7 +33,7 @@ public class JobGenerator {
 		ArrayList<Jobs> selected = new ArrayList<>();
 		
 		for (int i = 0; i < 6; i++) {
-			
+			addJobToList(selected);
 		}
 			
 		return selected;
@@ -102,9 +102,42 @@ public class JobGenerator {
 	
 	//helper methods
 	
+	/*
+	 * Helper method to generate 6 different jobs and add to a list
+	 * @param aJobs: list where the jobs will be added
+	 * @return: no returns. Just used to add elements to list
+	 */
+	private void generateSixUniqueJobs(List<Jobs> aJobs) {
+		
+		Jobs potentialJob = jobs[new Random().nextInt(jobs.length)];
+		
+		while (checkIfAlreadySelected(potentialJob, aJobs) == true) {
+			
+		}
+	}
+	
 	//helper method for adding just 2 jobs
 	private void twoJobsWholeParty(ArrayList<Jobs> jobsList) {
 		
+	}
+	
+	/*
+	 * Helper method that will be overloaded that takes a job chosen and a list
+	 * and checks whether the job is already in the list
+	 * @param checkJob: a Jobs object that is to be checked
+	 * @param aJobList: a one-dimensional ArrayList that is going to be checked
+	 * @return isAlreadyAdded: Boolean that returns whether the job is already in the list
+	 */
+	private boolean checkIfAlreadySelected(Jobs checkJob, List<Jobs> aJobList) {
+		
+		boolean isAlreadyAdded = false;
+		
+		//Due to any list being a maximum size of 12 possible elements
+		if (aJobList.contains(checkJob)) {
+			isAlreadyAdded = true;
+		}
+		
+		return isAlreadyAdded;
 	}
 	
 	/*
@@ -125,7 +158,7 @@ public class JobGenerator {
 	}
 	
 	/*
-	 * Helper method to add a job to the list
+	 * Helper method to add a job to the list that will also be overloaded
 	 * @param aJobs: list that needs jobs added to them
 	 * @param index: the index to add the job
 	 * @return: no returns
@@ -144,6 +177,22 @@ public class JobGenerator {
 		aJobs.get(index).add(potentialJob);
 	}
 	
+	/*
+	 * Helper method that is overloaded to take only a one-dimensional List<Jobs> and add the Job if it isn't already in it
+	 * @param aJob: Jobs object that will potentially be added
+	 * @param aJobList: one-dimensional List<Jobs> that will have Jobs added to it
+	 * @return: no returns. Only used to add elements to list
+	 */
+	private void addJobToList(List<Jobs> aJobList) {
+		
+		Jobs potentialJob = jobs[new Random().nextInt(jobs.length)];
+		
+		while (checkIfAlreadySelected(potentialJob, aJobList) == true) {
+			potentialJob = jobs[new Random().nextInt(jobs.length)];
+		}
+		
+		aJobList.add(potentialJob);
+	}
 	
 	/* code to remind myself how to properly do what i need
 	 * for (int i = 0; i < 2; i++) {
