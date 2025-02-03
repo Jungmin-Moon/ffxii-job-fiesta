@@ -23,23 +23,38 @@ public class JobGenerator {
 	
 	//methods for generating
 	
-	//for every character to have a different job1
+
+	/*
+	 * Used to generate a List<Jobs> of six unique jobs
+	 * @param: no parameters
+	 * @return selected: list of jobs with no duplicates to be returned
+	 */
 	public List<Jobs> singleDifferentJobs() {
 		ArrayList<Jobs> selected = new ArrayList<>();
 		
-		
+		for (int i = 0; i < 6; i++) {
+			
+		}
 			
 		return selected;
 	}
 	
-	//every character getting the same job1 
+	/*
+	 * Used to generate a single job for all 6 characters
+	 * @param: no parameters
+	 * @return selectedOne: the job that every character must be
+	 */
 	public Jobs oneJobEveryone() {
 		Jobs selectedOne = jobs[new Random().nextInt(jobs.length)];
 		
 		return selectedOne;
 	}
 	
-	//for every character getting the same job1, and same job2
+	/*
+	 * Used to generate two jobs that will be used by everyone
+	 * @param: no parameters
+	 * @return bothJobs: a list with the two jobs that everyone must be job1/job2 for the entire game
+	 */
 	public List<Jobs> oneJobEveryoneBoth() {
 		ArrayList<Jobs> bothJobs = new ArrayList<>();
 		
@@ -50,7 +65,12 @@ public class JobGenerator {
 		return bothJobs;
 	}
 	
-	//for every character having a different job1 and job2
+	/*
+	 * Generates a 2D ArrayList of type Jobs where every character has a different job1, and job2
+	 * Which character gets which job will be random in the order they become permanent party members
+	 * @param: no parameters
+	 * @return twelveFilled: 2D ArrayList listing the order of job1/job2 for each member
+	 */
 	public ArrayList<ArrayList<Jobs>> differentBothJobs() {
 		ArrayList<ArrayList<Jobs>> twelveFilled = new ArrayList<>();
 		
@@ -87,7 +107,12 @@ public class JobGenerator {
 		
 	}
 	
-	//helper method to check if a job was already selected
+	/*
+	 * Helper method  to check if the Job chosen from the enum wasn't already added. 
+	 * @param checkjob: Jobs object that is to be checked
+	 * @param list: the list that is searched 
+	 * @returns isAlreadyAdded: boolean that returns whether the job is already in there (true) or isn't in there (false)
+	 */
 	private boolean checkIfAlreadySelected(Jobs checkJob, ArrayList<ArrayList<Jobs>> list) {
 		boolean isAlreadyAdded = false;
 		
@@ -99,7 +124,12 @@ public class JobGenerator {
 		return isAlreadyAdded;
 	}
 	
-	//adds jobs to the List
+	/*
+	 * Helper method to add a job to the list
+	 * @param aJobs: list that needs jobs added to them
+	 * @param index: the index to add the job
+	 * @return: no returns
+	 */
 	private void addJobToList(ArrayList<ArrayList<Jobs>> aJobs, int index) {
 		
 		//randomly chooses a job in the ENUM
