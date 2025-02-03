@@ -3,7 +3,9 @@ package com.zodiacfiesta.services;
 import org.springframework.stereotype.Service;
 import com.zodiacfiesta.entities.Jobs;
 
-//service used to generate the runs the user has chosen which calls on JobGenerator to generate jobs based on the run type
+/*
+ * Class used to be a gateway between the controller and the JobGenerator to return the runs people request
+ */
 @Service
 public class RunGenerator {
 

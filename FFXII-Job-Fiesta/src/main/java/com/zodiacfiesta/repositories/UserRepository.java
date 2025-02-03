@@ -7,6 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import com.zodiacfiesta.entities.User;
 
+/*
+ * Repository interface for querying the users table
+ */
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
 	
