@@ -23,8 +23,6 @@ public class User {
 	private String username;
 	private String password;
 	private String role;
-	private String firstName;
-	private String lastName;
 	
 	/*
 	 * Fetches the id of the user from the db
@@ -98,41 +96,6 @@ public class User {
 		this.role = role;
 	}
 	
-	/*
-	 * Fetches the user's firstName from the db
-	 * @param: no parameters
-	 * @return: the user's firstName 
-	 */
-	public String getFirstName() {
-		return firstName;
-	}
-	
-	/*
-	 * Sets the user's firstName
-	 * @param firstName: the String to store into the firstName
-	 * @return: no returns
-	 */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	
-	/*
-	 * Fetches the user's lastName from the db
-	 * @param: no parameters
-	 * @return: lastName of the user 
-	 */
-	public String getLastName() {
-		return lastName;
-	}
-	
-	/*
-	 * Sets the user's lastName
-	 * @param lastName: the String to store into the lastName
-	 * @return: no returns
-	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	
+
 	
 }
