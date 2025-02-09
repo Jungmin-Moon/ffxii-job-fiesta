@@ -8,11 +8,26 @@ import com.zodiacfiesta.entities.Jobs;
  */
 @Service
 public class RunGenerator {
+	
+	/*
+	 * 1. Depending on run type call a different method
+	 * 2. each run type will call the JobGenerator it needs
+	 * 3. it will call the Repo to insert correctly with helper methods
+	 * 4. return rowCount to see if an entry was inserted or not
+	 */
 
 	
 	//every character has one different job only
-	public void generateOneJobForAll() {
+	//each method should return a rowcount to make sure something was inserted or not
+	/*
+	 * 
+	 */
+	public int generateOneJobForAll() {
+		int rowCount = 0;
 		
+		
+		
+		return rowCount;
 	}
 	
 	//every character is same job one job
