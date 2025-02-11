@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.zodiacfiesta.entities.Jobs;
 import com.zodiacfiesta.entities.Runs;
 import com.zodiacfiesta.repositories.RunsRepository;
+import com.zodiacfiesta.repositories.UserRepository;
 
 /*
  * Class used to be a gateway between the controller and the JobGenerator to return the runs people request
@@ -23,10 +24,12 @@ public class RunGenerator {
 	 */
 	JobGenerator jobGenerator;
 	RunsRepository runRepo;
+	UserRepository userRepo;
 	
-	RunGenerator(JobGenerator jobGenerator, RunsRepository runRepo) {
+	RunGenerator(JobGenerator jobGenerator, RunsRepository runRepo, UserRepository userRepo) {
 		this.jobGenerator = jobGenerator;
 		this.runRepo = runRepo;
+		this.userRepo = userRepo;
 	}
 	
 	//every character has one different job only
@@ -69,5 +72,11 @@ public class RunGenerator {
 	
 	
 	//helper methods
-	
+	public boolean profileControllerHelper(String runType, String username) {
+		boolean created = false;
+		
+		
+		
+		return created;
+	}
 }
