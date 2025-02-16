@@ -75,8 +75,19 @@ public class RunGenerator {
 	public boolean profileControllerHelper(String runType, String username) {
 		boolean created = false;
 		
-		
+		switch(runType) {
+			case "oneJobAll" -> {created = generateOneJobForAll();}
+			default -> {created = false;}
+		}
 		
 		return created;
 	}
+	
+	
+	//method to check the date time of the run stored in the DB with the date time that was saved to make sure the run was added
+	
+	
+	
+	//method to check that the user doesn't already have an in progress run
+	
 }
