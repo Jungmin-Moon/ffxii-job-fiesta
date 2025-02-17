@@ -57,7 +57,9 @@ public class RunGenerator {
 			
 			setSingleJobRunValues(chosenJob, oneJobRun, dateMade);
 			
-			if(checkDateStarted(oneJobRun, dateCheck)) {
+			runRepo.save(oneJobRun);
+			
+			if(checkDateStarted(user, dateCheck, "oneJobAll")) {
 				added = true;
 			} else {
 				added = false;
@@ -87,11 +89,17 @@ public class RunGenerator {
 	
 	
 	//method to check the date time of the run stored in the DB with the date time that was saved to make sure the run was added
-	public boolean checkDateStarted(Runs runToCheck, LocalDateTime timeMade) {
+	public boolean checkDateStarted(User user, LocalDateTime timeMade, String runType) {
+		long userId = user.getId();
 		
-		LocalDateTime runTime = runToCheck.getDateStarted();
+		Runs run = runRepo.checkRunAdded(userId, timeMade, runType);
 		
-		return (runTime.isEqual(runTime));
+		if (run != null) {
+			return true;
+		} else {
+			return false;
+		}
+		
 	}
 	
 	
@@ -106,6 +114,14 @@ public class RunGenerator {
 	private void setSingleJobRunValues(Jobs singleJob, Runs newRun, LocalDateTime dateMade) {
 		newRun.setDateStarted(dateMade);
 		
+		
+		//can not think of a better way for single job runs to set values easier
+		newRun.setVaanJobOne(singleJob);
+		newRun.setFranJobOne(singleJob);
+		newRun.setBalthierJobone(singleJob);
+		newRun.setBaschJobOne(singleJob);
+		newRun.setAsheJobOne(singleJob);
+		newRun.setPeneloJobOne(singleJob);
 		
 	}
 }
