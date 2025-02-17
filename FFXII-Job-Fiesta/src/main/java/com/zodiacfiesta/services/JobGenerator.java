@@ -18,10 +18,10 @@ import com.zodiacfiesta.entities.Jobs;
 public class JobGenerator {
 
 	Jobs[] jobs = Jobs.values();
-	//Jobs[] jobs = Jobs.values();
-	//jobs[new Random().nextInt(jobs.length)];
+	
 	
 	//order for jobs should be Vaan, Fran/Balthier, Basch, Ashe, Penelo
+	//[0,0] and [1,0] are vaan, [0,1] and [1,1] are Fran, [0,2] and [1,2] are Balthier, [0,3] and [1,3] is Basch, [0,4] and [1,4] are Ashe, [0,5] and [1,5] are Penelo
 	
 	/*
 	 * Used to generate a List<Jobs> of six unique jobs Job1(Unique)/(No Job2)

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.zodiacfiesta.entities.Jobs;
 import com.zodiacfiesta.entities.Runs;
+import com.zodiacfiesta.entities.User;
 import com.zodiacfiesta.repositories.RunsRepository;
 import com.zodiacfiesta.repositories.UserRepository;
 
@@ -38,36 +39,37 @@ public class RunGenerator {
 	/*
 	 * .truncatedTo(ChronoUnit.SECONDS);
 	 */
-	public boolean generateOneJobForAll() {
+	public boolean generateOneJobForAll(String username) {
 		boolean added = false;
 		
-		Jobs chosenJob = jobGenerator.oneJobEveryone();
+		User user = userRepo.getByUsername(username);
 		
-		Runs oneJobRun = new Runs();
-		
-		LocalDateTime dateMade = LocalDateTime.now();
-		dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
-		
-		LocalDateTime dateCheck = dateMade;
-		
-		//oneJobRun = setRunValues(chosenJob, oneJobRun, );
+		if(checkIfActiveRun(user) == null) {
+			
+			Jobs chosenJob = jobGenerator.oneJobEveryone();
+			
+			Runs oneJobRun = new Runs();
+			
+			LocalDateTime dateMade = LocalDateTime.now();
+			dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
+			
+			LocalDateTime dateCheck = dateMade;
+			
+			setSingleJobRunValues(chosenJob, oneJobRun, dateMade);
+			
+			if(checkDateStarted(oneJobRun, dateCheck)) {
+				added = true;
+			} else {
+				added = false;
+			}
+			
+		} else {
+			
+			added = false;
+		}
 		
 		return added;
 	}
-	
-	//every character is same job one job
-	
-	
-	//every character has same job1 and job2
-	
-	
-	//every character has different jobs for job1 and job2
-	
-	
-	//every character has different job1s but same job2
-	
-	
-	//every character has different job2 but same job1
 	
 	
 	
@@ -76,7 +78,7 @@ public class RunGenerator {
 		boolean created = false;
 		
 		switch(runType) {
-			case "oneJobAll" -> {created = generateOneJobForAll();}
+			case "oneJobAll" -> {created = generateOneJobForAll(username);}
 			default -> {created = false;}
 		}
 		
@@ -85,9 +87,25 @@ public class RunGenerator {
 	
 	
 	//method to check the date time of the run stored in the DB with the date time that was saved to make sure the run was added
-	
+	public boolean checkDateStarted(Runs runToCheck, LocalDateTime timeMade) {
+		
+		LocalDateTime runTime = runToCheck.getDateStarted();
+		
+		return (runTime.isEqual(runTime));
+	}
 	
 	
 	//method to check that the user doesn't already have an in progress run
+	private Runs checkIfActiveRun(User user) {
+		Runs checkRun = runRepo.checkIfOngoing(user.getId());
+		
+		return checkRun;
+	}
 	
+	
+	private void setSingleJobRunValues(Jobs singleJob, Runs newRun, LocalDateTime dateMade) {
+		newRun.setDateStarted(dateMade);
+		
+		
+	}
 }
