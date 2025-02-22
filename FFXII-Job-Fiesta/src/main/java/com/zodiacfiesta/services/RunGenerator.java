@@ -50,6 +50,7 @@ public class RunGenerator {
 			Jobs chosenJob = jobGenerator.oneJobEveryone();
 			
 			Runs oneJobRun = new Runs();
+			oneJobRun.setRunType("OneJob");
 			
 			LocalDateTime dateMade = LocalDateTime.now();
 			dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
@@ -83,6 +84,7 @@ public class RunGenerator {
 			
 			List<Jobs> chosenJobs = jobGenerator.singleDifferentJobs();
 			Runs sixUniqueRun = new Runs();
+			sixUniqueRun.setRunType("SixUnique");
 			
 			LocalDateTime dateMade = LocalDateTime.now();
 			dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
@@ -116,6 +118,7 @@ public class RunGenerator {
 		
 		switch(runType) {
 			case "oneJobAll" -> {created = generateOneJobForAll(username);}
+			case "sixUniqueJobsOnly" -> {created = generateSixUniqueJobs(username);}
 			default -> {created = false;}
 		}
 		
@@ -146,15 +149,15 @@ public class RunGenerator {
 	}
 	
 	//helper method to assign jobs for job one not job two
-	private void setCorrectJobCharacter(List<Jobs> jobList, int index, Runs run) {
+	private void setCorrectJobOneCharacter(List<Jobs> jobList, int index, Runs run) {
 		
 		switch (index) {
-			case 1 -> run.setVaanJobOne(jobList.get(index));
-			case 2 -> run.setFranJobOne(jobList.get(index));
-			case 3 -> run.setBalthierJobone(jobList.get(index));
-			case 4 -> run.setBaschJobOne(jobList.get(index));
-			case 5 -> run.setAsheJobOne(jobList.get(index));
-			case 6 -> run.setPeneloJobOne(jobList.get(index));
+			case 0 -> run.setVaanJobOne(jobList.get(index));
+			case 1 -> run.setFranJobOne(jobList.get(index));
+			case 2 -> run.setBalthierJobone(jobList.get(index));
+			case 3 -> run.setBaschJobOne(jobList.get(index));
+			case 4 -> run.setAsheJobOne(jobList.get(index));
+			case 5 -> run.setPeneloJobOne(jobList.get(index));
 		}
 		
 	}
@@ -175,7 +178,7 @@ public class RunGenerator {
 	private void setSixUniqueJobs(List<Jobs> jobList, Runs newRun, LocalDateTime dateMade) {
 		
 		for (int i = 0; i < jobList.size(); i++) {
-			setCorrectJobCharacter(jobList, i, newRun);
+			setCorrectJobOneCharacter(jobList, i, newRun);
 		}
 	}
 }
