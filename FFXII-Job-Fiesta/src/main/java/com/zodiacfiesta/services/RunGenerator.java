@@ -2,6 +2,7 @@ package com.zodiacfiesta.services;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -44,7 +45,7 @@ public class RunGenerator {
 		
 		User user = userRepo.getByUsername(username);
 		
-		if(checkIfActiveRun(user) == null) {
+		if (checkIfActiveRun(user) == null) {
 			
 			Jobs chosenJob = jobGenerator.oneJobEveryone();
 			
@@ -59,7 +60,7 @@ public class RunGenerator {
 			
 			runRepo.save(oneJobRun);
 			
-			if(checkDateStarted(user, dateCheck, "oneJobAll")) {
+			if (checkDateStarted(user, dateCheck, "oneJobAll")) {
 				added = true;
 			} else {
 				added = false;
@@ -73,7 +74,37 @@ public class RunGenerator {
 		return added;
 	}
 	
-	
+	public boolean generateSixUniqueJobs(String username) {
+		boolean added = false;
+		
+		User user = userRepo.getByUsername(username);
+		
+		if (checkIfActiveRun(user) == null) {
+			
+			List<Jobs> chosenJobs = jobGenerator.singleDifferentJobs();
+			Runs sixUniqueRun = new Runs();
+			
+			LocalDateTime dateMade = LocalDateTime.now();
+			dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
+			
+			LocalDateTime dateCheck = dateMade;
+			
+			setSixUniqueJobs(chosenJobs, sixUniqueRun, dateMade);
+			
+			runRepo.save(sixUniqueRun);
+			
+			if (checkDateStarted(user, dateCheck, "sixUniqueJobsOnly")) {
+				added = true;
+			} else {
+				added = false;
+			}
+			
+		} else {
+			added = false;
+		}
+		
+		return added;
+	}
 	
 	//helper methods
 	public boolean profileControllerHelper(String runType, String username) {
@@ -114,7 +145,6 @@ public class RunGenerator {
 	private void setSingleJobRunValues(Jobs singleJob, Runs newRun, LocalDateTime dateMade) {
 		newRun.setDateStarted(dateMade);
 		
-		
 		//can not think of a better way for single job runs to set values easier
 		newRun.setVaanJobOne(singleJob);
 		newRun.setFranJobOne(singleJob);
@@ -122,6 +152,9 @@ public class RunGenerator {
 		newRun.setBaschJobOne(singleJob);
 		newRun.setAsheJobOne(singleJob);
 		newRun.setPeneloJobOne(singleJob);
+	}
+	
+	private void setSixUniqueJobs(List<Jobs> jobList, Runs newRun, LocalDateTime dateMade) {
 		
 	}
 }
