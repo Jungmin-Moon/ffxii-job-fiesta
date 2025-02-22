@@ -108,7 +108,27 @@ public class RunGenerator {
 		return added;
 	}
 	
-	
+	public boolean generateTwoJobsAll(String username) {
+		boolean added = false;
+		
+		User user = userRepo.getByUsername(username);
+		
+		if (checkIfActiveRun(user) == null) {
+			List<Jobs> twoJobs = jobGenerator.oneJobEveryoneBoth();
+			Runs twoJobRun = new Runs();
+			twoJobRun.setRunType("TwoJobs");
+			
+			LocalDateTime dateMade = LocalDateTime.now();
+			dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
+			LocalDateTime dateCheck = dateMade;
+			
+			
+		} else {
+			added = false;
+		}
+		
+		return added;
+	}
 	
 	//------------------------------------------------------------------------------------
 	
@@ -125,7 +145,6 @@ public class RunGenerator {
 		return created;
 	}
 	
-	
 	//method to check the date time of the run stored in the DB with the date time that was saved to make sure the run was added
 	public boolean checkDateStarted(User user, LocalDateTime timeMade, String runType) {
 		long userId = user.getId();
@@ -139,7 +158,6 @@ public class RunGenerator {
 		}
 		
 	}
-	
 	
 	//method to check that the user doesn't already have an in progress run
 	private Runs checkIfActiveRun(User user) {
@@ -174,8 +192,15 @@ public class RunGenerator {
 		newRun.setPeneloJobOne(singleJob);
 	}
 	
+	
+	
+	private void setTwoJobs(List<Jobs> twoJobList, Runs newRun, LocalDateTime dateMade) {
+		
+	}
+	
 	//order is Vaan, Fran, Balthier, Basch, Ashe, Penelo
 	private void setSixUniqueJobs(List<Jobs> jobList, Runs newRun, LocalDateTime dateMade) {
+		newRun.setDateStarted(dateMade);
 		
 		for (int i = 0; i < jobList.size(); i++) {
 			setCorrectJobOneCharacter(jobList, i, newRun);
