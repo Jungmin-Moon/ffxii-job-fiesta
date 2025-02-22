@@ -106,6 +106,10 @@ public class RunGenerator {
 		return added;
 	}
 	
+	
+	
+	//------------------------------------------------------------------------------------
+	
 	//helper methods
 	public boolean profileControllerHelper(String runType, String username) {
 		boolean created = false;
@@ -141,6 +145,19 @@ public class RunGenerator {
 		return checkRun;
 	}
 	
+	//helper method to assign jobs for job one not job two
+	private void setCorrectJobCharacter(List<Jobs> jobList, int index, Runs run) {
+		
+		switch (index) {
+			case 1 -> run.setVaanJobOne(jobList.get(index));
+			case 2 -> run.setFranJobOne(jobList.get(index));
+			case 3 -> run.setBalthierJobone(jobList.get(index));
+			case 4 -> run.setBaschJobOne(jobList.get(index));
+			case 5 -> run.setAsheJobOne(jobList.get(index));
+			case 6 -> run.setPeneloJobOne(jobList.get(index));
+		}
+		
+	}
 	
 	private void setSingleJobRunValues(Jobs singleJob, Runs newRun, LocalDateTime dateMade) {
 		newRun.setDateStarted(dateMade);
@@ -154,7 +171,11 @@ public class RunGenerator {
 		newRun.setPeneloJobOne(singleJob);
 	}
 	
+	//order is Vaan, Fran, Balthier, Basch, Ashe, Penelo
 	private void setSixUniqueJobs(List<Jobs> jobList, Runs newRun, LocalDateTime dateMade) {
 		
+		for (int i = 0; i < jobList.size(); i++) {
+			setCorrectJobCharacter(jobList, i, newRun);
+		}
 	}
 }
