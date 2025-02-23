@@ -56,12 +56,13 @@ public class RunGenerator {
 			dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
 			
 			LocalDateTime dateCheck = dateMade;
+			oneJobRun.setDateStarted(dateMade);
 			
-			setSingleJobRunValues(chosenJob, oneJobRun, dateMade);
+			setSameJobOneValues(chosenJob, oneJobRun);
 			
 			runRepo.save(oneJobRun);
 			
-			if (checkDateStarted(user, dateCheck, "oneJobAll")) {
+			if (checkDateStarted(user, dateCheck, "OneJob")) {
 				added = true;
 			} else {
 				added = false;
@@ -75,6 +76,7 @@ public class RunGenerator {
 		return added;
 	}
 	
+	//generates six unique jobs and the player only uses those 6
 	public boolean generateSixUniqueJobs(String username) {
 		boolean added = false;
 		
@@ -90,12 +92,13 @@ public class RunGenerator {
 			dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
 			
 			LocalDateTime dateCheck = dateMade;
+			sixUniqueRun.setDateStarted(dateMade);
 			
-			setSixUniqueJobs(chosenJobs, sixUniqueRun, dateMade);
+			setSixUniqueJobs(chosenJobs, sixUniqueRun);
 			
 			runRepo.save(sixUniqueRun);
 			
-			if (checkDateStarted(user, dateCheck, "sixUniqueJobsOnly")) {
+			if (checkDateStarted(user, dateCheck, "SixUnique")) {
 				added = true;
 			} else {
 				added = false;
@@ -108,6 +111,7 @@ public class RunGenerator {
 		return added;
 	}
 	
+	//every character will have the same JobOne and JobTwo but the two jobs will be different
 	public boolean generateTwoJobsAll(String username) {
 		boolean added = false;
 		
@@ -121,7 +125,16 @@ public class RunGenerator {
 			LocalDateTime dateMade = LocalDateTime.now();
 			dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
 			LocalDateTime dateCheck = dateMade;
+			twoJobRun.setDateStarted(dateMade);
 			
+			setTwoJobs(twoJobs, twoJobRun);
+			
+			runRepo.save(twoJobRun);
+			
+			if (checkDateStarted(user, dateCheck, "TwoJobs")) {
+				added = true;
+			} else 
+				added = false;
 			
 		} else {
 			added = false;
@@ -129,6 +142,8 @@ public class RunGenerator {
 		
 		return added;
 	}
+	
+	
 	
 	//------------------------------------------------------------------------------------
 	
@@ -166,7 +181,7 @@ public class RunGenerator {
 		return checkRun;
 	}
 	
-	//helper method to assign jobs for job one not job two
+	//helper method to assign jobs for job one not job two, for unique jobs
 	private void setCorrectJobOneCharacter(List<Jobs> jobList, int index, Runs run) {
 		
 		switch (index) {
@@ -180,27 +195,38 @@ public class RunGenerator {
 		
 	}
 	
-	private void setSingleJobRunValues(Jobs singleJob, Runs newRun, LocalDateTime dateMade) {
-		newRun.setDateStarted(dateMade);
+	//setting the same job ones to each character
+	private void setSameJobOneValues(Jobs firstJob, Runs newRun) {
+		//newRun.setDateStarted(dateMade);
 		
 		//can not think of a better way for single job runs to set values easier
-		newRun.setVaanJobOne(singleJob);
-		newRun.setFranJobOne(singleJob);
-		newRun.setBalthierJobone(singleJob);
-		newRun.setBaschJobOne(singleJob);
-		newRun.setAsheJobOne(singleJob);
-		newRun.setPeneloJobOne(singleJob);
+		newRun.setVaanJobOne(firstJob);
+		newRun.setFranJobOne(firstJob);
+		newRun.setBalthierJobone(firstJob);
+		newRun.setBaschJobOne(firstJob);
+		newRun.setAsheJobOne(firstJob);
+		newRun.setPeneloJobOne(firstJob);
 	}
 	
+	//setting the same job twos to each character
+	private void setSameJobTwoValues(Jobs secondJob, Runs newRun) {
+		newRun.setVaanJobTwo(secondJob);
+		newRun.setFranJobOne(secondJob);
+		newRun.setBalthierJobone(secondJob);
+		newRun.setBaschJobOne(secondJob);
+		newRun.setAsheJobOne(secondJob);
+		newRun.setPeneloJobOne(secondJob);
+	}
 	
-	
-	private void setTwoJobs(List<Jobs> twoJobList, Runs newRun, LocalDateTime dateMade) {
-		
+	//calls on the above two methods to correctly assign each character their job
+	private void setTwoJobs(List<Jobs> twoJobList, Runs newRun) {
+		setSameJobOneValues(twoJobList.get(0), newRun);
+		setSameJobTwoValues(twoJobList.get(1), newRun);
 	}
 	
 	//order is Vaan, Fran, Balthier, Basch, Ashe, Penelo
-	private void setSixUniqueJobs(List<Jobs> jobList, Runs newRun, LocalDateTime dateMade) {
-		newRun.setDateStarted(dateMade);
+	private void setSixUniqueJobs(List<Jobs> jobList, Runs newRun) {
+		//newRun.setDateStarted(dateMade);
 		
 		for (int i = 0; i < jobList.size(); i++) {
 			setCorrectJobOneCharacter(jobList, i, newRun);
