@@ -2,6 +2,7 @@ package com.zodiacfiesta.services;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -143,7 +144,35 @@ public class RunGenerator {
 		return added;
 	}
 	
-	
+	public boolean generateTwelveUniqueJobs(String username) {
+		boolean added = false;
+		
+		User user = userRepo.getByUsername(username);
+		
+		if (checkIfActiveRun(user) == null) {
+			ArrayList<ArrayList<Jobs>> twelveJobs = new ArrayList<>();
+			Runs twelveUnique = new Runs();
+			twelveUnique.setRunType("TwelveUnique");
+			
+			LocalDateTime dateMade = LocalDateTime.now();
+			dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
+			LocalDateTime dateCheck = dateMade;
+			twelveUnique.setDateStarted(dateMade);
+			
+			runRepo.save(twelveUnique);
+			
+			if (checkDateStarted(user, dateCheck, "TwelveUnique")) {
+				added = true;
+			} else {
+				added = false;
+			}
+		} else {
+			added = false;
+		}
+		
+		
+		return added;
+	}
 	
 	//------------------------------------------------------------------------------------
 	
