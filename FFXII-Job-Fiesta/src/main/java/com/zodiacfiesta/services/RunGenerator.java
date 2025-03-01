@@ -150,7 +150,7 @@ public class RunGenerator {
 		User user = userRepo.getByUsername(username);
 		
 		if (checkIfActiveRun(user) == null) {
-			ArrayList<ArrayList<Jobs>> twelveJobs = new ArrayList<>();
+			ArrayList<ArrayList<Jobs>> twelveJobs = jobGenerator.differentBothJobs();
 			Runs twelveUnique = new Runs();
 			twelveUnique.setRunType("TwelveUnique");
 			
@@ -158,6 +158,8 @@ public class RunGenerator {
 			dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
 			LocalDateTime dateCheck = dateMade;
 			twelveUnique.setDateStarted(dateMade);
+			
+			setTwelveUniqueJobs(twelveJobs, twelveUnique);
 			
 			runRepo.save(twelveUnique);
 			
@@ -226,7 +228,6 @@ public class RunGenerator {
 	
 	//setting the same job ones to each character
 	private void setSameJobOneValues(Jobs firstJob, Runs newRun) {
-		//newRun.setDateStarted(dateMade);
 		
 		//can not think of a better way for single job runs to set values easier
 		newRun.setVaanJobOne(firstJob);
@@ -260,5 +261,50 @@ public class RunGenerator {
 		for (int i = 0; i < jobList.size(); i++) {
 			setCorrectJobOneCharacter(jobList, i, newRun);
 		}
+	}
+	
+	private void setTwelveUniqueJobs(ArrayList<ArrayList<Jobs>> doubleJobsList, Runs newRun) {
+		for (int i = 0; i < doubleJobsList.size(); i++) {
+			
+			
+			//0,0 is vaan, 0,1 is fran, 0,2 balthier
+			for (int j = 0; j < doubleJobsList.get(i).size(); j++) {
+				setCorrectJobsEachCharacter(doubleJobsList, newRun, i, j);
+			}
+		}
+	}
+	
+	//if index1 which is i in the above is 0 it will set the job one for the character
+	//if index1 is 1 then it will call the method to set the second job for characters
+	private void setCorrectJobsEachCharacter(ArrayList<ArrayList<Jobs>> doubleJobsList, Runs newRun, int index1, int index2) {
+		if (index1 == 0) {
+			setCorrectJobOneCharacter(doubleJobsList, newRun, index2);
+		}
+		
+		if (index1 == 1) {
+			setCorrectJobTwoCharacter(doubleJobsList, newRun, index2);
+		}
+	}
+	
+	private void setCorrectJobOneCharacter(ArrayList<ArrayList<Jobs>> doubleJobsLIst, Runs run, int index) {
+		switch (index) {
+			case 0 -> run.setVaanJobOne(doubleJobsLIst.get(0).get(index));
+			case 1 -> run.setFranJobOne(doubleJobsLIst.get(0).get(index));
+			case 2 -> run.setBalthierJobone(doubleJobsLIst.get(0).get(index));
+			case 3 -> run.setBaschJobOne(doubleJobsLIst.get(0).get(index));
+			case 4 -> run.setAsheJobOne(doubleJobsLIst.get(0).get(index));
+			case 5 -> run.setPeneloJobOne(doubleJobsLIst.get(0).get(index));
+	}
+	}
+	
+	private void setCorrectJobTwoCharacter(ArrayList<ArrayList<Jobs>> doubleJobsLIst, Runs run, int index) {
+		switch (index) {
+			case 0 -> run.setVaanJobTwo(doubleJobsLIst.get(1).get(index));
+			case 1 -> run.setFranJobTwo(doubleJobsLIst.get(1).get(index));
+			case 2 -> run.setBalthierJobTwo(doubleJobsLIst.get(1).get(index));
+			case 3 -> run.setBaschJobTwo(doubleJobsLIst.get(1).get(index));
+			case 4 -> run.setAsheJobTwo(doubleJobsLIst.get(1).get(index));
+			case 5 -> run.setPeneloJobTwo(doubleJobsLIst.get(1).get(index));
+	}
 	}
 }
