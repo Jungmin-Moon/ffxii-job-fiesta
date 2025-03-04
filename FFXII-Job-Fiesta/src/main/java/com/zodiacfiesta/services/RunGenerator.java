@@ -213,6 +213,30 @@ public class RunGenerator {
 	public boolean generateUniqeJobOnes(String username) {
 		boolean added = false;
 		
+		User user = userRepo.getByUsername(username);
+		if (checkIfActiveRun(user) == null) {
+			ArrayList<ArrayList<Jobs>> sevenJobs = jobGenerator.differentJobOne();
+			Runs sevenUnique = new Runs();
+			sevenUnique.setRunType("UniqueJobOne");
+			
+			LocalDateTime dateMade = LocalDateTime.now();
+			dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
+			LocalDateTime dateCheck = dateMade;
+			sevenUnique.setDateStarted(dateMade);
+			
+			setSameJobTwoValues(sevenJobs.get(1).get(0), sevenUnique);
+			setJobOnes(sevenJobs, sevenUnique);
+			
+			runRepo.save(sevenUnique);
+			
+			if (checkDateStarted(user, dateCheck, "UniqueJobOne")) {
+				added = true;
+			} else {
+				added = false;
+			}
+		} else {
+			added = false;
+		}
 		
 		return added;
 	}
@@ -343,6 +367,12 @@ public class RunGenerator {
 			case 3 -> run.setBaschJobTwo(doubleJobsLIst.get(1).get(index));
 			case 4 -> run.setAsheJobTwo(doubleJobsLIst.get(1).get(index));
 			case 5 -> run.setPeneloJobTwo(doubleJobsLIst.get(1).get(index));
+		}
+	}
+	
+	private void setJobOnes(ArrayList<ArrayList<Jobs>> jobsList, Runs run) {
+		for (int i = 0; i < jobsList.get(0).size(); i++) {
+			setCorrectJobOneCharacter(jobsList, run, i);
 		}
 	}
 	
