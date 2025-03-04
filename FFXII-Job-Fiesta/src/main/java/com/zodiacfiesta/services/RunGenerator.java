@@ -176,6 +176,47 @@ public class RunGenerator {
 		return added;
 	}
 	
+	//method to generate a single job one for every character while job two is unique and different for each
+	public boolean generateUniqueJobTwos(String username) {
+		boolean added = false;
+		
+		User user = userRepo.getByUsername(username);
+		if (checkIfActiveRun(user) == null) {
+			ArrayList<ArrayList<Jobs>> sevenJobs = jobGenerator.differentJobTwo();
+			Runs sevenUnique = new Runs();
+			sevenUnique.setRunType("UniqueJobTwo");
+			
+			LocalDateTime dateMade = LocalDateTime.now();
+			dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
+			LocalDateTime dateCheck = dateMade;
+			sevenUnique.setDateStarted(dateMade);
+			
+			setSameJobOneValues(sevenJobs.get(0).get(0), sevenUnique);
+			setJobTwos(sevenJobs, sevenUnique);
+			
+			runRepo.save(sevenUnique);
+			
+			if (checkDateStarted(user, dateCheck, "UniqueJobTwo")) {
+				added = true;
+			} else {
+				added = false;
+			}
+			
+		} else {
+			added = false;
+		}
+		
+		return added;
+	}
+	
+	//method to generate a single job two for every character while job one is unique and different for each
+	public boolean generateUniqeJobOnes(String username) {
+		boolean added = false;
+		
+		
+		return added;
+	}
+	
 	//------------------------------------------------------------------------------------
 	
 	//helper methods
@@ -256,7 +297,6 @@ public class RunGenerator {
 	
 	//order is Vaan, Fran, Balthier, Basch, Ashe, Penelo
 	private void setSixUniqueJobs(List<Jobs> jobList, Runs newRun) {
-		//newRun.setDateStarted(dateMade);
 		
 		for (int i = 0; i < jobList.size(); i++) {
 			setCorrectJobOneCharacter(jobList, i, newRun);
@@ -265,8 +305,6 @@ public class RunGenerator {
 	
 	private void setTwelveUniqueJobs(ArrayList<ArrayList<Jobs>> doubleJobsList, Runs newRun) {
 		for (int i = 0; i < doubleJobsList.size(); i++) {
-			
-			
 			//0,0 is vaan, 0,1 is fran, 0,2 balthier
 			for (int j = 0; j < doubleJobsList.get(i).size(); j++) {
 				setCorrectJobsEachCharacter(doubleJobsList, newRun, i, j);
@@ -294,7 +332,7 @@ public class RunGenerator {
 			case 3 -> run.setBaschJobOne(doubleJobsLIst.get(0).get(index));
 			case 4 -> run.setAsheJobOne(doubleJobsLIst.get(0).get(index));
 			case 5 -> run.setPeneloJobOne(doubleJobsLIst.get(0).get(index));
-	}
+		}
 	}
 	
 	private void setCorrectJobTwoCharacter(ArrayList<ArrayList<Jobs>> doubleJobsLIst, Runs run, int index) {
@@ -305,6 +343,12 @@ public class RunGenerator {
 			case 3 -> run.setBaschJobTwo(doubleJobsLIst.get(1).get(index));
 			case 4 -> run.setAsheJobTwo(doubleJobsLIst.get(1).get(index));
 			case 5 -> run.setPeneloJobTwo(doubleJobsLIst.get(1).get(index));
+		}
 	}
+	
+	private void setJobTwos(ArrayList<ArrayList<Jobs>> jobsList, Runs run) {
+		for (int i = 0; i < jobsList.get(1).size(); i++) {
+			setCorrectJobTwoCharacter(jobsList, run, i);
+		}
 	}
 }
