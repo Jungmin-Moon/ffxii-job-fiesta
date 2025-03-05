@@ -35,11 +35,10 @@ public class RunGenerator {
 		this.userRepo = userRepo;
 	}
 	
-	//every character has one different job only
-	//each method checks that  the latest run the user has in the table is currently going and the start date is the same as one stored
-	//to make sure that the run was added correctly.
 	/*
-	 * .truncatedTo(ChronoUnit.SECONDS);
+	 * Generates one job for every character to use and it will be the only job all six characters can use
+	 * @param username: String used to grab the user information from the database
+	 * @return added: a boolean signifying if the run was added or not
 	 */
 	public boolean generateOneJobForAll(String username) {
 		boolean added = false;
@@ -72,7 +71,11 @@ public class RunGenerator {
 		return added;
 	}
 	
-	//generates six unique jobs and the player only uses those 6
+	/*
+	 * Generates a run where all six characters are given a unique job and those six jobs will be the only ones used
+	 * @param username: String used to grab user information from the database
+	 * @return added: boolean signifying if the run was added or not
+	 */
 	public boolean generateSixUniqueJobs(String username) {
 		boolean added = false;
 		
@@ -103,7 +106,12 @@ public class RunGenerator {
 		return added;
 	}
 	
-	//every character will have the same JobOne and JobTwo but the two jobs will be different
+	/*
+	 * Generates a run where all six characters will have the same jobs for their first job and same jobs for their second one.
+	 * Results in every character having the same Job One and Job Two. JobOne(same)/JobTwo(same)
+	 * @param username: String used to grab user information from the database
+	 * @return added: boolean signifying if the run was added or not
+	 */
 	public boolean generateTwoJobsAll(String username) {
 		boolean added = false;
 		
@@ -133,6 +141,12 @@ public class RunGenerator {
 		return added;
 	}
 	
+	/*
+	 * Generates a run where all six characters will utilize all twelve jobs available in the game.
+	 * Each character will have a unique combination of Job one and Job two 
+	 * @param username: String used to grab user information from the databse
+	 * @return added: boolean signifying if the run was added or not
+	 */
 	public boolean generateTwelveUniqueJobs(String username) {
 		boolean added = false;
 		
@@ -164,6 +178,9 @@ public class RunGenerator {
 	}
 	
 	//method to generate a single job one for every character while job two is unique and different for each
+	/*
+	 * 
+	 */
 	public boolean generateUniqueJobTwos(String username) {
 		boolean added = false;
 		
