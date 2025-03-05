@@ -49,15 +49,10 @@ public class RunGenerator {
 		if (checkIfActiveRun(user) == null) {
 			
 			Jobs chosenJob = jobGenerator.oneJobEveryone();
-			
 			Runs oneJobRun = new Runs();
-			oneJobRun.setRunType("OneJob");
 			
-			LocalDateTime dateMade = LocalDateTime.now();
-			dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
-			
-			LocalDateTime dateCheck = dateMade;
-			oneJobRun.setDateStarted(dateMade);
+			setRunType("OneJob", oneJobRun);
+			LocalDateTime dateCheck = setDateStartedAndReturn(oneJobRun);
 			
 			setSameJobOneValues(chosenJob, oneJobRun);
 			
@@ -87,13 +82,9 @@ public class RunGenerator {
 			
 			List<Jobs> chosenJobs = jobGenerator.singleDifferentJobs();
 			Runs sixUniqueRun = new Runs();
-			sixUniqueRun.setRunType("SixUnique");
 			
-			LocalDateTime dateMade = LocalDateTime.now();
-			dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
-			
-			LocalDateTime dateCheck = dateMade;
-			sixUniqueRun.setDateStarted(dateMade);
+			setRunType("SixUnique", sixUniqueRun);
+			LocalDateTime dateCheck = setDateStartedAndReturn(sixUniqueRun);
 			
 			setSixUniqueJobs(chosenJobs, sixUniqueRun);
 			
@@ -123,10 +114,8 @@ public class RunGenerator {
 			Runs twoJobRun = new Runs();
 			twoJobRun.setRunType("TwoJobs");
 			
-			LocalDateTime dateMade = LocalDateTime.now();
-			dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
-			LocalDateTime dateCheck = dateMade;
-			twoJobRun.setDateStarted(dateMade);
+			setRunType("TwoJobs", twoJobRun);
+			LocalDateTime dateCheck = setDateStartedAndReturn(twoJobRun);
 			
 			setTwoJobs(twoJobs, twoJobRun);
 			
@@ -154,10 +143,8 @@ public class RunGenerator {
 			Runs twelveUnique = new Runs();
 			twelveUnique.setRunType("TwelveUnique");
 			
-			LocalDateTime dateMade = LocalDateTime.now();
-			dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
-			LocalDateTime dateCheck = dateMade;
-			twelveUnique.setDateStarted(dateMade);
+			setRunType("TwelveUnique", twelveUnique);
+			LocalDateTime dateCheck = setDateStartedAndReturn(twelveUnique);
 			
 			setTwelveUniqueJobs(twelveJobs, twelveUnique);
 			
@@ -186,11 +173,9 @@ public class RunGenerator {
 			Runs sevenUnique = new Runs();
 			sevenUnique.setRunType("UniqueJobTwo");
 			
-			LocalDateTime dateMade = LocalDateTime.now();
-			dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
-			LocalDateTime dateCheck = dateMade;
-			sevenUnique.setDateStarted(dateMade);
-			
+			setRunType("UniqueJobTwo", sevenUnique);
+			LocalDateTime dateCheck = setDateStartedAndReturn(sevenUnique);
+
 			setSameJobOneValues(sevenJobs.get(0).get(0), sevenUnique);
 			setJobTwos(sevenJobs, sevenUnique);
 			
@@ -219,10 +204,8 @@ public class RunGenerator {
 			Runs sevenUnique = new Runs();
 			sevenUnique.setRunType("UniqueJobOne");
 			
-			LocalDateTime dateMade = LocalDateTime.now();
-			dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
-			LocalDateTime dateCheck = dateMade;
-			sevenUnique.setDateStarted(dateMade);
+			setRunType("UniqueJobOne", sevenUnique);
+			LocalDateTime dateCheck = setDateStartedAndReturn(sevenUnique);
 			
 			setSameJobTwoValues(sevenJobs.get(1).get(0), sevenUnique);
 			setJobOnes(sevenJobs, sevenUnique);
@@ -275,6 +258,17 @@ public class RunGenerator {
 		Runs checkRun = runRepo.checkIfOngoing(user.getId());
 		
 		return checkRun;
+	}
+	
+	private void setRunType(String runType, Runs run) {
+		run.setRunType(runType);
+	}
+	
+	private LocalDateTime setDateStartedAndReturn(Runs run) {
+		LocalDateTime dateMade = LocalDateTime.now();
+		dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
+		
+		return dateMade;
 	}
 	
 	//helper method to assign jobs for job one not job two, for unique jobs
