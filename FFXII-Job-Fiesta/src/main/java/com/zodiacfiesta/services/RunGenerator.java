@@ -29,6 +29,7 @@ public class RunGenerator {
 	RunsRepository runRepo;
 	UserRepository userRepo;
 	
+	
 	RunGenerator(JobGenerator jobGenerator, RunsRepository runRepo, UserRepository userRepo) {
 		this.jobGenerator = jobGenerator;
 		this.runRepo = runRepo;
@@ -37,8 +38,9 @@ public class RunGenerator {
 	
 	/*
 	 * Generates one job for every character to use and it will be the only job all six characters can use
-	 * @param username: String used to grab the user information from the database
-	 * @return added: a boolean signifying if the run was added or not
+	 * 
+	 * @param username used to grab the user information from the database
+	 * @return 		   a boolean signifying if the run was added or not
 	 */
 	public boolean generateOneJobForAll(String username) {
 		boolean added = false;
@@ -73,8 +75,9 @@ public class RunGenerator {
 	
 	/*
 	 * Generates a run where all six characters are given a unique job and those six jobs will be the only ones used
-	 * @param username: String used to grab user information from the database
-	 * @return added: boolean signifying if the run was added or not
+	 * 
+	 * @param username used to grab user information from the database
+	 * @return		   boolean signifying if the run was added or not
 	 */
 	public boolean generateSixUniqueJobs(String username) {
 		boolean added = false;
@@ -109,8 +112,9 @@ public class RunGenerator {
 	/*
 	 * Generates a run where all six characters will have the same jobs for their first job and same jobs for their second one.
 	 * Results in every character having the same Job One and Job Two. JobOne(same)/JobTwo(same)
-	 * @param username: String used to grab user information from the database
-	 * @return added: boolean signifying if the run was added or not
+	 * 
+	 * @param username used to grab user information from the database
+	 * @return 		   boolean signifying if the run was added or not
 	 */
 	public boolean generateTwoJobsAll(String username) {
 		boolean added = false;
@@ -144,8 +148,9 @@ public class RunGenerator {
 	/*
 	 * Generates a run where all six characters will utilize all twelve jobs available in the game.
 	 * Each character will have a unique combination of Job one and Job two 
-	 * @param username: String used to grab user information from the databse
-	 * @return added: boolean signifying if the run was added or not
+	 * 
+	 * @param username used to grab user information from the database
+	 * @return		   boolean signifying if the run was added or not
 	 */
 	public boolean generateTwelveUniqueJobs(String username) {
 		boolean added = false;
@@ -177,9 +182,11 @@ public class RunGenerator {
 		return added;
 	}
 	
-	//method to generate a single job one for every character while job two is unique and different for each
 	/*
+	 * Generates jobs for every character but only seven total. Every character's job one will be the same while job two will be unique
 	 * 
+	 * @param username used to grab user information from the database
+	 * @return		   boolean signifying if the run was added or not
 	 */
 	public boolean generateUniqueJobTwos(String username) {
 		boolean added = false;
@@ -211,7 +218,12 @@ public class RunGenerator {
 		return added;
 	}
 	
-	//method to generate a single job two for every character while job one is unique and different for each
+	/*
+	 * Generates seven total unique jobs where every character's job two will be the same for every character and job one will be unique
+	 * 
+	 * @param username used to grab user information from the database
+	 * @return		   boolean signifying if the run was added or not
+	 */
 	public boolean generateUniqeJobOnes(String username) {
 		boolean added = false;
 		
@@ -241,9 +253,18 @@ public class RunGenerator {
 		return added;
 	}
 	
-	//------------------------------------------------------------------------------------
 	
 	//helper methods
+	
+	
+	/*
+	 * Method that will call the correct generator method depending on what is passed from the profile controller and return a boolean
+	 * if the run was successfully created.
+	 * 
+	 * @param runType specifies the run type sent by the controller so the method can call the right generator
+	 * @param username used to assign the correct user the desired run 
+	 * @return		   a Boolean telling the controller that the run was created
+	 */
 	public boolean profileControllerHelper(String runType, String username) {
 		boolean created = false;
 		
@@ -257,6 +278,15 @@ public class RunGenerator {
 	}
 	
 	//method to check the date time of the run stored in the DB with the date time that was saved to make sure the run was added
+	/*
+	 * Method is run during the final steps of run generation to make sure the run was added correctly by matching the LocalDateTime 
+	 * and making sure it is the right LocalDateTime for the right user along with run type
+	 * 
+	 * @param user the user to check
+	 * @param timeMade the date and time that needs to be checked
+	 * @param runType the type of run that was generated
+	 * @return		  returns true or false depending on if the run was added correctly
+	 */
 	public boolean checkDateStarted(User user, LocalDateTime timeMade, String runType) {
 		long userId = user.getId();
 		
@@ -271,16 +301,34 @@ public class RunGenerator {
 	}
 	
 	//method to check that the user doesn't already have an in progress run
+	/*
+	 * Method used to check if a user has a run already going
+	 * 
+	 * @param user the user that needs to be checked
+	 * @return	   will return a Runs object if it exists null otherwise
+	 */
 	private Runs checkIfActiveRun(User user) {
 		Runs checkRun = runRepo.checkIfOngoing(user.getId());
 		
 		return checkRun;
 	}
 	
+	/*
+	 * Method to assign the run type to a run
+	 * 
+	 * @param runType value for what kind of run the user chose
+	 * @param run the Runs object to save the value to
+	 */
 	private void setRunType(String runType, Runs run) {
 		run.setRunType(runType);
 	}
 	
+	/*
+	 * Method to generate a dateStarted for a user generated run
+	 * 
+	 * @param run the run to assign the dateStarted value to
+	 * @return dateMade the date created for dateStarted truncated to show at most the seconds column
+	 */
 	private LocalDateTime setDateStartedAndReturn(Runs run) {
 		LocalDateTime dateMade = LocalDateTime.now();
 		dateMade = dateMade.truncatedTo(ChronoUnit.SECONDS);
@@ -289,6 +337,13 @@ public class RunGenerator {
 	}
 	
 	//helper method to assign jobs for job one not job two, for unique jobs
+	/*
+	 * Method sets the right job one values to each character
+	 * 
+	 * @param jobList the List holding the six unique jobs
+	 * @param index used to set the right job to the right character
+	 * @param run the run object to save the values to
+	 */
 	private void setCorrectJobOneCharacter(List<Jobs> jobList, int index, Runs run) {
 		
 		switch (index) {
@@ -303,9 +358,14 @@ public class RunGenerator {
 	}
 	
 	//setting the same job ones to each character
+	/*
+	 * Method sets the job one of all six characters to be the same
+	 * 
+	 * @param firstJob the job to assign to all six characters' job one
+	 * @param newRun the run object to save the values to
+	 */
 	private void setSameJobOneValues(Jobs firstJob, Runs newRun) {
 		
-		//can not think of a better way for single job runs to set values easier
 		newRun.setVaanJobOne(firstJob);
 		newRun.setFranJobOne(firstJob);
 		newRun.setBalthierJobone(firstJob);
@@ -314,7 +374,12 @@ public class RunGenerator {
 		newRun.setPeneloJobOne(firstJob);
 	}
 	
-	//setting the same job twos to each character
+	/*
+	 * Method sets the job two of all six characters to be the same
+	 * 
+	 * @param secondJob the job to assign to each characters' job two
+	 * @param newRun the run object to save the values to
+	 */
 	private void setSameJobTwoValues(Jobs secondJob, Runs newRun) {
 		newRun.setVaanJobTwo(secondJob);
 		newRun.setFranJobOne(secondJob);
@@ -323,14 +388,24 @@ public class RunGenerator {
 		newRun.setAsheJobOne(secondJob);
 		newRun.setPeneloJobOne(secondJob);
 	}
-	
-	//calls on the above two methods to correctly assign each character their job
+
+	/*
+	 * Method used to set job one and job two to be the same for each character such that all six characters will have the same job one and job two
+	 * 
+	 * @param twoJobList ArrayList holding the two unique jobs
+	 * @param newRun Runs object to assign the right values to
+	 */
 	private void setTwoJobs(List<Jobs> twoJobList, Runs newRun) {
 		setSameJobOneValues(twoJobList.get(0), newRun);
 		setSameJobTwoValues(twoJobList.get(1), newRun);
 	}
 	
-	//order is Vaan, Fran, Balthier, Basch, Ashe, Penelo
+	/*
+	 * Method that is used to assign the right job ones for each character where the run is only using job ones for all six
+	 * 
+	 * @param jobList ArrayList holding the six unique jobs generated
+	 * @param newRun Runs object to assign the values to
+	 */
 	private void setSixUniqueJobs(List<Jobs> jobList, Runs newRun) {
 		
 		for (int i = 0; i < jobList.size(); i++) {
@@ -338,6 +413,12 @@ public class RunGenerator {
 		}
 	}
 	
+	/*
+	 * Method that is used to assign each character a unique job one and job two
+	 * 
+	 * @param doubleJobstList 2D ArrayList holding the generated jobs in the order they need to be assigned
+	 * @param newRun Runs object that is the run a user requested
+	 */
 	private void setTwelveUniqueJobs(ArrayList<ArrayList<Jobs>> doubleJobsList, Runs newRun) {
 		for (int i = 0; i < doubleJobsList.size(); i++) {
 			//0,0 is vaan, 0,1 is fran, 0,2 balthier
@@ -347,8 +428,14 @@ public class RunGenerator {
 		}
 	}
 	
-	//if index1 which is i in the above is 0 it will set the job one for the character
-	//if index1 is 1 then it will call the method to set the second job for characters
+	/*
+	 * Method used by the above method setTwelveUniqueJobs to call the right method to assign a character's job one or job two
+	 * 
+	 * @param doubleJobstList 2D ArrayList holding the jobs
+	 * @param newRun Runs object that is a user's requested run
+	 * @param index1 used to see which row to pull a job from, 0 is row 1 for job one and 1 is for 2 for job two
+	 * @param index2 used to get the correct job one or job two for the character and assign it to them
+	 */
 	private void setCorrectJobsEachCharacter(ArrayList<ArrayList<Jobs>> doubleJobsList, Runs newRun, int index1, int index2) {
 		if (index1 == 0) {
 			setCorrectJobOneCharacter(doubleJobsList, newRun, index2);
@@ -359,6 +446,13 @@ public class RunGenerator {
 		}
 	}
 	
+	/*
+	 * Method that sets the job ones of all six characters when they are unique
+	 * 
+	 * @param doubleJobstList 2D ArrayList that holds the jobs that were generated for a particular run
+	 * @param run Runs object that assigns the right jobs to the run a user requested to be generated
+	 * @param index	Used to get the right job for the right character job ones
+	 */
 	private void setCorrectJobOneCharacter(ArrayList<ArrayList<Jobs>> doubleJobsLIst, Runs run, int index) {
 		switch (index) {
 			case 0 -> run.setVaanJobOne(doubleJobsLIst.get(0).get(index));
@@ -370,6 +464,13 @@ public class RunGenerator {
 		}
 	}
 	
+	/*
+	 * Method that sets the job twos of all six characters when they are unique
+	 * 
+	 * @param doubleJobsList 2D ArrayList that holds the jobs generated for a particular run
+	 * @param run Runs object that assigns the right jobs to the run a user requested to be generated
+	 * @param index	used to get the right job for the right character job twos
+	 */
 	private void setCorrectJobTwoCharacter(ArrayList<ArrayList<Jobs>> doubleJobsLIst, Runs run, int index) {
 		switch (index) {
 			case 0 -> run.setVaanJobTwo(doubleJobsLIst.get(1).get(index));
@@ -381,12 +482,24 @@ public class RunGenerator {
 		}
 	}
 	
+	/*
+	 * Method to set the right job ones for each character when they are unique
+	 * 
+	 * @param jobsList is a 2D ArrayList that holds the jobs generated in the run
+	 * @param run is a Runs object to set the values for the run that the user generated
+	 */
 	private void setJobOnes(ArrayList<ArrayList<Jobs>> jobsList, Runs run) {
 		for (int i = 0; i < jobsList.get(0).size(); i++) {
 			setCorrectJobOneCharacter(jobsList, run, i);
 		}
 	}
 	
+	/*
+	 * Method to set the right job twos for each character for when they are unique
+	 * 
+	 * @param jobsList is a 2D ArrayList that holds the jobs generated in the run. 
+	 * @param run is a Runs object to set the values for the run the user generated
+	 */
 	private void setJobTwos(ArrayList<ArrayList<Jobs>> jobsList, Runs run) {
 		for (int i = 0; i < jobsList.get(1).size(); i++) {
 			setCorrectJobTwoCharacter(jobsList, run, i);
