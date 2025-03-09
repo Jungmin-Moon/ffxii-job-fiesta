@@ -23,6 +23,7 @@ public class Runs {
 	//what type of run they chose
 	private long userID;
 	private String runType;
+	private String username;
 	
 	//storing the Enums as Strings
 	@Enumerated(EnumType.STRING)
@@ -83,6 +84,14 @@ public class Runs {
 
 	public void setRunType(String runType) {
 		this.runType = runType;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public Jobs getVaanJobOne() {
