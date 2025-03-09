@@ -1,12 +1,12 @@
 package com.zodiacfiesta.controllers;
 
-import java.util.List;
-
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.zodiacfiesta.entities.Runs;
 import com.zodiacfiesta.repositories.RunsRepository;
 
 @Controller
@@ -20,11 +20,14 @@ public class HomeController {
 	}
 	
 	@GetMapping() 
-	public String home() {
-		List<Runs> lastTenStarted = runsRepo.getLastTenAdded();
-		List<Runs> lastTenFinished = runsRepo.getLastTenFinished();
+	public String home(Authentication auth, Model model) {
+		var lastTenStarted = runsRepo.getLastTenAdded();
+		var lastTenFinished = runsRepo.getLastTenFinished();
 		
+		UserDetails user = (UserDetails) auth.getPrincipal();
 		
+		model.addAttribute("startedRuns", lastTenStarted);
+		model.addAttribute("finishedRuns", lastTenFinished);
 		
 		return "home.html";
 	}

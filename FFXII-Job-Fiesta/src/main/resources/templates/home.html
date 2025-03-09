@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang = "en" xmlns:th = "http://www.thymeleaf.org">
+
+<head>
+	<meta charset = "UTF-8">
+	<title>Home</title>
+</head>
+
+	<body>
+		<h1 id = "headers">Hello, <span th:remove = "tag" sec:authentication = "name"> thymeleaf</span</h1>
+		
+		<br />
+		
+		<div th:if = "${#lists.isEmpty(startedRuns)}">
+			<h1>There are no runs started yet. Be the first!.</h1>
+		</div>
+		
+		<div th:if = "${#lists.isEmpty(finishedRuns)}">
+			<h1>There are no runs finished yet. Be the first!.</h1>
+		</div>
+		
+		<div th:if = "${lists.size(startedRuns) > 0}">
+			<h1 id = "startedRunHeader">Here are the last ten runs that were recently started.</h1>
+			<table id = "startedRuns">
+				<thead>
+					<tr>
+						<td>User</td>
+						<td>Run Type</td>
+						<td>First Job: Vaan</td>
+						<td>Second Job: Vaan</td>
+						<td>First Job: Fran</td>
+						<td>Second Job: Fran</td>
+						<td>First Job: Balthier</td>
+						<td>Second Job: Balthier</td>
+						<td>First Job: Basch</td>
+						<td>Second Job: Basch</td>
+						<td>First Job: Ashe</td>
+						<td>Second Job: Ashe</td>
+						<td>First Job: Penelo</td>
+						<td>Second Job: Penelo</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each = "ongoingRuns : ${startedRun}">
+						<td th:text = "${ongoingRuns.
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+	</body>
+	
+</html>
